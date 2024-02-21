@@ -69,7 +69,7 @@ def _quadratic_multiply(x, y):
 
     number = bit_shift(a, length).decimal_val + bit_shift(BinaryNumber(b.decimal_val -a.decimal_val - c.decimal_val), length//2).decimal_val + c.decimal_val
   
-    return BinaryNumber(number)
+    return(BinaryNumber(number))
 
 
     
