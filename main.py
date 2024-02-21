@@ -48,19 +48,36 @@ def quadratic_multiply(x, y):
     # this just converts the result from a BinaryNumber to a regular int
     return _quadratic_multiply(x,y).decimal_val
 
-def _quadratic_multiply(x, y):
-    ### TODO
-    pass
-    ###
+def _quadratic_multiply(x, y): 
+    xvec = x.binary_vec
+    yvec = y.binary_vec
+    xvec,yvec = pad(xvec,yvec)
+    length = len(xvec)
 
-
+    # Base case
+    if x.decimal_val <= 1 and y.decimal_val <=1:
+      return     BinaryNumber(x.decimal_val*y.decimal_val)
     
+    else:
+      l_xvec,r_xvec = split_number(xvec)
+      l_yvec,r_yvec = split_number(yvec)
+      
+    a = _quadratic_multiply(l_xvec,l_yvec)
+    b = _quadratic_multiply(BinaryNumber(l_xvec.decimal_val + r_xvec.decimal_val),BinaryNumber(l_yvec.decimal_val+r_yvec.decimal_val))
+    c = _quadratic_multiply(r_xvec,r_yvec)
+ 
+
+    number = bit_shift(a, length).decimal_val + bit_shift(BinaryNumber(b.decimal_val -a.decimal_val - c.decimal_val), length//2).decimal_val + c.decimal_val
+  
+    return BinaryNumber(number)
+
+
     
 def test_quadratic_multiply(x, y, f):
     start = time.time()
-    # multiply two numbers x, y using function f
-    
+    f(BinaryNumber(x), BinaryNumber(y))
     return (time.time() - start)*1000
+
 
 
     
